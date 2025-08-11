@@ -18,7 +18,7 @@ services:
       - autotrack_network
 
 volumes:
-  postgresql_db:
+  postgresql_db_autotrack:
 
 
 networks:
