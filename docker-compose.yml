@@ -6,7 +6,7 @@ services:
     #Limite de memoria cuando se usa con docker-compose o limitar la memoria cuando se deployea
     #shm_size: 128mb
     ports:
-      - 5432:5433
+      - 5433:5432
     volumes:
       - postgresql_db_autotrack:/var/lib/postgresql/data
     environment:
