@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
-  email        String?  @unique
+  email        String   @unique
   username     String   @unique
   name         String?
   surname      String?
@@ -26,6 +26,6 @@ model User {
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   start_date   DateTime @default(now())
-  end_date     DateTime
+  end_date     DateTime @default(dbgenerated("(now() + interval '30 days')"))
   isDeleted    Boolean  @default(false)
 }
