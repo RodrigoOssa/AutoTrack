@@ -7,50 +7,44 @@ const users = [
         name: 'John Doe',
         role: 'Admin',
     },
-    // Puedes agregar más usuarios aquí
 ];
 
 export default function UserList() {
     return (
-        <div className="w-full h-full overflow-auto">
-            <table className="min-w-full h-full divide-y divide-gray-200 table-fixed">
-                <thead className="bg-gray-50">
-                    <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Editar</th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Ver</th>
-                        <th className="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+        <div className="w-full h-full overflow-x-auto">
+            <div className="min-w-[600px]">
+                <div className="grid grid-cols-5 bg-gray-50 font-medium text-xs uppercase text-gray-500 tracking-wider">
+                    <div className="px-6 py-3 text-left">Email</div>
+                    <div className="px-6 py-3 text-left">Usuario</div>
+                    <div className="px-6 py-3 text-left">Nombre</div>
+                    <div className="px-6 py-3 text-left">Rol</div>
+                    <div className="px-3 py-3 text-center">Acciones</div>
+                </div>
+                <div>
                     {users.map((user, idx) => (
-                        <tr key={idx}>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.email}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.username}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.name}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{user.role}</td>
-                            <td className="px-3 py-4 whitespace-nowrap text-center">
+                        <div
+                            key={idx}
+                            className="grid grid-cols-5 items-center border-b border-gray-200 bg-white text-sm"
+                        >
+                            <div className="px-6 py-4 text-gray-900 break-words whitespace-normal">{user.email}</div>
+                            <div className="px-6 py-4 text-gray-900 break-words whitespace-normal">{user.username}</div>
+                            <div className="px-6 py-4 text-gray-900 break-words whitespace-normal">{user.name}</div>
+                            <div className="px-6 py-4 text-gray-900 break-words whitespace-normal">{user.role}</div>
+                            <div className="px-3 py-4 text-center flex items-center justify-center gap-2">
                                 <button className="text-blue-500 hover:text-blue-700">
-                                    <PencilSquareIcon className="h-5 w-5 inline" />
+                                    <PencilSquareIcon className="h-5 w-5" />
                                 </button>
-                            </td>
-                            <td className="px-3 py-4 whitespace-nowrap text-center">
                                 <button className="text-green-500 hover:text-green-700">
-                                    <EyeIcon className="h-5 w-5 inline" />
+                                    <EyeIcon className="h-5 w-5" />
                                 </button>
-                            </td>
-                            <td className="px-3 py-4 whitespace-nowrap text-center">
                                 <button className="text-red-500 hover:text-red-700">
-                                    <TrashIcon className="h-5 w-5 inline" />
+                                    <TrashIcon className="h-5 w-5" />
                                 </button>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     ))}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
     );
 }

@@ -9,9 +9,9 @@ export default function UsersLayout({
     return (
         <>
             <SideBar />
-            <main className="flex-1 flex flex-col overflow-hidden">
+            <main className="flex flex-col overflow-hidden w-full">
                 <Title />
-                <div className="flex-1 p-6 overflow-y-auto">
+                <div className="p-2 overflow-y-auto">
                     {children}
                 </div>
             </main>
