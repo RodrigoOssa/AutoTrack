@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model SubscriberAccountUser {
+model SubscriberAccount {
   id            String         @id @default(uuid())
   email         String         @unique
   username      String         @unique
@@ -32,17 +32,17 @@ model SubscriberAccountUser {
 }
 
 model EmployeeUser {
-  id          String                @id @default(uuid())
-  email       String                @unique
-  username    String                @unique
+  id          String            @id @default(uuid())
+  email       String            @unique
+  username    String            @unique
   name        String
   surname     String
   password    String
-  score       Int                   @default(100)
-  role        String[]              @default(["OPERATOR"])
-  created_at  DateTime              @default(now())
-  updated_at  DateTime              @updatedAt
-  relatedTo   SubscriberAccountUser @relation(fields: [relatedToId], references: [id])
+  score       Int               @default(100)
+  role        String[]          @default(["OPERATOR"])
+  created_at  DateTime          @default(now())
+  updated_at  DateTime          @updatedAt
+  relatedTo   SubscriberAccount @relation(fields: [relatedToId], references: [id])
   relatedToId String
   workOrders  WorkOrder[]
 
@@ -50,16 +50,16 @@ model EmployeeUser {
 }
 
 model CompanyData {
-  id             String                @id @default(uuid())
+  id             String            @id @default(uuid())
   companyName    String
   companyAddress String?
   companyPhone   String?
   companyEmail   String?
   website        String?
   socialMedia    String[]
-  created_at     DateTime              @default(now())
-  updated_at     DateTime              @updatedAt
-  relatedTo      SubscriberAccountUser @relation(fields: [relatedToId], references: [id])
+  created_at     DateTime          @default(now())
+  updated_at     DateTime          @updatedAt
+  relatedTo      SubscriberAccount @relation(fields: [relatedToId], references: [id])
   relatedToId    String
   vehicle        Vehicle[]
 }
