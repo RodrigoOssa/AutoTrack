@@ -13,19 +13,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  username     String   @unique
-  name         String?
-  surname      String?
-  phone_number String?
-  password     String
-  plan         String[] @default(["free"])
-  role         String[] @default(["user"])
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-  start_date   DateTime @default(now())
-  end_date     DateTime @default(dbgenerated("(now() + interval '30 days')"))
-  isDeleted    Boolean  @default(false)
+model SubscriberAccountUser {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  username      String         @unique
+  name          String?
+  surname       String?
+  phone_number  String?
+  password      String
+  plan          String[]       @default(["FREE"])
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  start_date    DateTime       @default(now())
+  end_date      DateTime       @default(dbgenerated("(now() + interval '30 days')"))
+  isDeleted     Boolean        @default(false)
+  employeeUsers EmployeeUser[]
+  companyData   CompanyData[]
+}
+
+model EmployeeUser {
+  id          String                @id @default(uuid())
+  email       String                @unique
+  username    String                @unique
+  name        String
+  surname     String
+  password    String
+  score       Int                   @default(100)
+  role        String[]              @default(["OPERATOR"])
+  created_at  DateTime              @default(now())
+  updated_at  DateTime              @updatedAt
+  relatedTo   SubscriberAccountUser @relation(fields: [relatedToId], references: [id])
+  relatedToId String
+  workOrders  WorkOrder[]
+
+  @@index([relatedToId, email])
+}
+
+model CompanyData {
+  id             String                @id @default(uuid())
+  companyName    String
+  companyAddress String?
+  companyPhone   String?
+  companyEmail   String?
+  website        String?
+  socialMedia    String[]
+  created_at     DateTime              @default(now())
+  updated_at     DateTime              @updatedAt
+  relatedTo      SubscriberAccountUser @relation(fields: [relatedToId], references: [id])
+  relatedToId    String
+  vehicle        Vehicle[]
+}
+
+model Vehicle {
+  id           String      @id @default(uuid())
+  brand        String
+  model        String
+  year         Int
+  licensePlate String      @unique
+  vin          String?     @unique
+  color        String?
+  ownerName    String?
+  ownerSurname String?
+  ownerPhone   String?
+  ownerEmail   String?
+  ownerAddress String?
+  details      String?
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  relatedTo    CompanyData @relation(fields: [relatedToId], references: [id])
+  relatedToId  String
+  WorkOrder    WorkOrder[]
+}
+
+model WorkOrder {
+  id            Int          @id @default(autoincrement())
+  dateReceived  DateTime     @default(now())
+  dateCompleted DateTime?
+  status        String       @default("JOINED")
+  description   String?
+  totalCost     String?
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  vehicle       Vehicle      @relation(fields: [vehicleId], references: [id])
+  vehicleId     String
+  assignedTo    EmployeeUser @relation(fields: [assignedToId], references: [id])
+  assignedToId  String
 }
